@@ -5,6 +5,10 @@ type AppContextProps = {
     page: string | null;
     setPage: React.Dispatch<React.SetStateAction<string | null>>;
   };
+  sidebar: {
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  };
 };
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -14,15 +18,21 @@ type AppProviderProps = {
 };
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [page, setPage] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  const activePageValue = {
+  const activePage = {
     page,
     setPage,
+  };
+  const sidebar = {
+    isOpen,
+    setIsOpen,
   };
   return (
     <AppContext.Provider
       value={{
-        activePage: activePageValue,
+        activePage,
+        sidebar,
       }}
     >
       {children}
